@@ -1,0 +1,13 @@
+h1 {
+	margin: 10px 10px 0 10px;
+}
+
+ul {
+	padding: 5px;
+	margin: 10px;
+	list-style: none;
+	background-color: #FFCC66;
+	border: 1px solid;
+	width: 410px;
+}
+

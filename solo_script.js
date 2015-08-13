@@ -19,7 +19,7 @@ console.log(array.length);
 for(var i = 0; i < array.length; i++){
   array[i] = calculateSTI(array[i]);
  	newEl = document.createElement('li');
-	newText = document.createTextNode(array[i].join(', '));
+	newText = document.createTextNode("Name: " + array[i][0] + " | STI: " + array[i][1] + " | New Salary: " + array[i][2] + " | Bonus: " + array[i][3]);
 	newEl.appendChild(newText);
 	position.appendChild(newEl);
 }
@@ -39,8 +39,8 @@ function calculateSTI(array){
   }
 
   newArray[1] = ((bonus * 100) + "%");
-  newArray[2] = Math.round(baseSalary * (1.0 + bonus));
-  newArray[3] = Math.round(baseSalary * bonus);
+  newArray[2] = ("$" + (Math.round(baseSalary * (1.0 + bonus))));
+  newArray[3] = ("$" + (Math.round(baseSalary * bonus)));
   console.log(newArray[0] + " " + newArray[1] + " " + newArray[2] + " " + newArray[3]);
   return newArray;
 }
