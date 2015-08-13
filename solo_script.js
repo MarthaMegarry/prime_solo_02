@@ -1,12 +1,20 @@
 // ! ! !
-// Three Bugs
+// Three Bugs Redux
 
-var arrayAtticus = ["Atticus", "2405", "47000", 3];
-var arrayJem = ["Jem", "62347", "63500", 4];
-var arrayBoo = ["Boo", "11435", "54000", 3];
-var arrayScout = ["Scout", "6243", "74750", 5];
+var Employee = function (empName, empNum, baseSalary, reviewScore) {
+  this.empName = empName;
+  this.empNum = empNum;
+  this.baseSalary = baseSalary;
+  this.reviewScore = reviewScore;
+}
 
-var array = [arrayAtticus, arrayJem, arrayBoo, arrayScout];
+var atticus = new Employee("Atticus", "2405", "47000", 3);
+var jem = new Employee("Jem", "62347", "63500", 4);
+var boo = new Employee("Boo", "11435", "54000", 3);
+var scout = new Employee("Scout", "6243", "74750", 5);
+
+
+var array = [atticus, jem, boo, scout];
 
 //Create variables used to write to the DOM
 var newEl, newText, position;
@@ -15,34 +23,32 @@ position = document.getElementById('content');
 
 //Loop the array, extracting each array and writing information to the DOM
 //Note that the information is not 'clean'
-console.log(array.length);
 for(var i = 0; i < array.length; i++){
   array[i] = calculateSTI(array[i]);
  	newEl = document.createElement('li');
-	newText = document.createTextNode("Name: " + array[i][0] + " | STI: " + array[i][1] + " | New Salary: " + array[i][2] + " | Bonus: " + array[i][3]);
+	newText = document.createTextNode("Name: " + array[i].empName + " | STI: " + array[i].sti + " | New Salary: " + array[i].newSal + " | Bonus: " + array[i].bonus);
 	newEl.appendChild(newText);
 	position.appendChild(newEl);
 }
 
-function calculateSTI(array){
-  var newArray = [];
+function calculateSTI(object){
+  var newObject = {};
 
-  newArray[0] = array[0];
-
-  var employeeNumber = array[1];
-  var baseSalary = array[2];
-  var reviewScore = array[3];
+  newObject.empName = object.empName;
+  var employeeNumber = object.empNum;
+  var baseSalary = object.baseSalary;
+  var reviewScore = object.reviewScore;
 
   var bonus = getBaseSTI(reviewScore) + getYearAdjustment(employeeNumber) - getIncomeAdjustment(baseSalary);
   if(bonus > 0.13){
     bonus = 0.13;
   }
 
-  newArray[1] = ((bonus * 100) + "%");
-  newArray[2] = ("$" + (Math.round(baseSalary * (1.0 + bonus))));
-  newArray[3] = ("$" + (Math.round(baseSalary * bonus)));
-  console.log(newArray[0] + " " + newArray[1] + " " + newArray[2] + " " + newArray[3]);
-  return newArray;
+  newObject.sti = ((bonus * 100) + "%");
+  newObject.newSal = ("$" + (Math.round(baseSalary * (1.0 + bonus))));
+  newObject.bonus = ("$" + (Math.round(baseSalary * bonus)));
+  console.log(newObject.empName + " " + newObject.sti + " " + newObject.newSal + " " + newObject.bonus);
+  return newObject;
 }
 
 function getBaseSTI(reviewScore){
