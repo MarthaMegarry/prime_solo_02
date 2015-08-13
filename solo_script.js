@@ -16,6 +16,14 @@ var scout = new Employee("Scout", "6243", "74750", 5);
 
 var array = [atticus, jem, boo, scout];
 
+var makeNewObject = function(empName, empNum, baseSalary, reviewScore) {
+  this.empName = empName;
+  this.sti = calcSTI(reviewScore, empNum, baseSalary);
+  this.newSal = calcNewSal(baseSalary, this.sti);
+  this.bonus = calcBonus(baseSalary, this.sti);
+};
+
+
 //Create variables used to write to the DOM
 var newEl, newText, position;
 //Capture the position of insertion into the DOM
@@ -24,31 +32,36 @@ position = document.getElementById('content');
 //Loop the array, extracting each array and writing information to the DOM
 //Note that the information is not 'clean'
 for(var i = 0; i < array.length; i++){
-  array[i] = calculateSTI(array[i]);
+  array[i] = new makeNewObject(array[i].empName, array[i].empNum, array[i].baseSalary, array[i].reviewScore);
  	newEl = document.createElement('li');
-	newText = document.createTextNode("Name: " + array[i].empName + " | STI: " + array[i].sti + " | New Salary: " + array[i].newSal + " | Bonus: " + array[i].bonus);
+	newText = document.createTextNode("Name: " + array[i].empName + " | STI: " + (array[i].sti * 100) + "% | New Salary: $" + array[i].newSal + " | Bonus: $" + array[i].bonus);
 	newEl.appendChild(newText);
 	position.appendChild(newEl);
 }
 
-function calculateSTI(object){
-  var newObject = {};
-
-  newObject.empName = object.empName;
-  var employeeNumber = object.empNum;
-  var baseSalary = object.baseSalary;
-  var reviewScore = object.reviewScore;
-
-  var bonus = getBaseSTI(reviewScore) + getYearAdjustment(employeeNumber) - getIncomeAdjustment(baseSalary);
+function calcSTI (reviewScore, empNum, baseSalary) {
+  var bonus = getBaseSTI(reviewScore) + getYearAdjustment(empNum) - getIncomeAdjustment(baseSalary);
   if(bonus > 0.13){
     bonus = 0.13;
   }
 
-  newObject.sti = ((bonus * 100) + "%");
-  newObject.newSal = ("$" + (Math.round(baseSalary * (1.0 + bonus))));
-  newObject.bonus = ("$" + (Math.round(baseSalary * bonus)));
-  console.log(newObject.empName + " " + newObject.sti + " " + newObject.newSal + " " + newObject.bonus);
-  return newObject;
+  var sti = bonus;
+  return sti;
+}
+
+function calcNewSal(baseSalary, bonus2) {
+  parseInt(bonus2);
+  parseInt(baseSalary);
+  var newSal = (Math.round(baseSalary * (1.0 + bonus2)));
+  return newSal;
+}
+
+function calcBonus(baseSalary, bonus2) {
+  parseInt(baseSalary);
+  parseInt(bonus2);
+  bonus = (Math.round(baseSalary * bonus2));
+  console.log(bonus2);
+  return bonus;
 }
 
 function getBaseSTI(reviewScore){
